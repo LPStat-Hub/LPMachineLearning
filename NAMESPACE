@@ -1,0 +1,8 @@
+exportPattern("^[[:alpha:]]+")
+import("graphics", "orthopolynom","h2o","caret","glmnet","parallel")
+importFrom("HDInterval","hdi")
+importFrom("leaps","regsubsets")
+importFrom("methods","is")
+importFrom("stats", "approxfun", "as.formula", "coef", "density",
+             "dnorm", "ecdf", "integrate", "lm", "pchisq", "pf", "poly",
+             "predict", "quantile", "runif")
