@@ -2,9 +2,9 @@
 main files for LPMachineLearning package
 This is package for nonparametric statistical learning. 
 
-//[![CRANstatus](https://www.r-pkg.org/badges/version/grf)](https://cran.r-project.org/package=grf)
-//[CRAN Downloads overall](http://cranlogs.r-pkg.org/badges/grand-total/grf)
-//[![Build Status](https://travis-ci.com/grf-labs/grf.svg?branch=master)](https://travis-ci.com/grf-labs/grf)
+[//]:[![CRANstatus](https://www.r-pkg.org/badges/version/grf)](https://cran.r-project.org/package=grf)
+[//]:[CRAN Downloads overall](http://cranlogs.r-pkg.org/badges/grand-total/grf)
+[//]:[![Build Status](https://travis-ci.com/grf-labs/grf.svg?branch=master)](https://travis-ci.com/grf-labs/grf)
 
 some descripyion
 
