@@ -25,4 +25,4 @@ examples
 
 Mukhopadhyay, S., and Wang, K (2020)
 <b>Breiman's 'Two Cultures' Revisited and Reconciled</b>. <i>Technical Report</i>.
-//[<a href="https://arxiv.org/abs/1610.01271">arxiv</a>]
+<!--- [<a href="https://arxiv.org/abs/1610.01271">arxiv</a>]--->
