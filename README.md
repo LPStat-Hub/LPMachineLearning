@@ -2,7 +2,7 @@
 main files for LPMachineLearning package
 This is package for nonparametric statistical learning. 
 
-some description
+More details can be found in [R package documentation](https://github.com/LPML-hub/LPMachineLearning/blob/master/LPMachineLearning-manual.pdf).
 
 ### Installation
 
