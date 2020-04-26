@@ -5,4 +5,4 @@ importFrom("leaps","regsubsets")
 importFrom("methods","is")
 importFrom("stats", "approxfun", "as.formula", "coef", "density",
              "dnorm", "ecdf", "integrate", "lm", "pchisq", "pf", "poly",
-             "predict", "quantile", "runif")
+             "predict", "quantile", "runif") 
