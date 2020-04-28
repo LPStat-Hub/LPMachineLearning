@@ -1,7 +1,6 @@
-Readme
-================
 
 # LPMachineLearning <a href='https://github.com/LPML-hub/LPMachineLearning/'></a>
+================
 
 Main files for LPMachineLearning package. This is package provide
 Statistical modeling tools for converting a black-box ML algorithm into
