@@ -217,15 +217,13 @@ whether the models from UPM are congruent with the observed data.
 library(LPMachineLearning)
 data(butterfly)
 attach(butterfly)
-
 n=length(y)
 set.seed(129)
 indx<- sample(1:n,floor(.15*n))
 gof.knn<-UPM.gof(x,y,m=c(6,4),method="knn",k=15,indx=indx)
-```
-``` r
 U.knn <- gof.knn$q.residuals
 ```
+
 ``` r
 par(mfrow=c(1,2))
 #histogram:
