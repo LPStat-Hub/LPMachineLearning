@@ -359,10 +359,10 @@ detach(cholesterol)
 #### Generalized shape predictors
 
 Generalized shape predictors are those that influence the whole
-conditional distribution (beyond just mean) of the response \(Y\). This
+conditional distribution (beyond just mean) of the response $Y$. This
 function finds the most relevant attributes that are predictive for
 certain shapes (that user is interested in) of the conditional
-distribution \(f_{Y|X=x}(y)\). Here's an example using the online news
+distribution $f_{Y|X=x}(y)$. Here's an example using the online news
 popularity data:
 
 ``` r
