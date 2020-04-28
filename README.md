@@ -304,17 +304,16 @@ This is an example given in section 3.1 of the reference paper, using
 the Online news popularity data set.
 
 ``` r
-library(h2o)
 library(LPMachineLearning)
 #loading data
 data(onlineNews)
 X<-onlineNews[,-60]
 y<-onlineNews[,60]
-#computing the mean estimates
-h2o.init()
 ```
-
 ``` r
+#GBM regression
+library(h2o)
+h2o.init()
 h2o.no_progress()
 reg.dat<-as.h2o(cbind(y,X))
 modelfit<- h2o.gbm(y=1, training_frame = reg.dat) 
