@@ -41,7 +41,7 @@ data(boxOffice)
 attach(boxOffice)
 
 X.test<-12
-fc <-  c("cornflowerblue", "lightseagreen")  #"dodgerblue2","forestgreen", "chocolate1"
+fc <-  c("cornflowerblue", "lightseagreen")  
 plot(x[x>9],y[x>9],cex=.8,col="gray70",ylab="After first week box office revenues",xlab="Opening day box office revenues",cex.lab=.9)
 abline(v=X.test,col=fc,lty=2,lwd=2)
 ```
@@ -73,13 +73,13 @@ dhat.plot.norm<-function(LPcden.obj,df=15,mu.x0,sd.x0,col='steelblue'){
   for(plotid in 1:length(LPcden.obj$dhat)){
     
     dhat.obj<-LPcden.obj$dhat[[plotid]]
-    u.axe<-seq(0.01,.99,length.out=1000)   ###this line changed
-    y.axe<-qnorm(u.axe,mu.x0 ,sd.x0)    ###this line changed
+    u.axe<-seq(0.01,.99,length.out=1000)   
+    y.axe<-qnorm(u.axe,mu.x0 ,sd.x0)    
     dvals<-dhat.obj(y.axe)
     delta0<-diff(range(dvals))
     par(mar=c(5,4.5,2,2))
-    uaxe<-seq(0.01,.99,length.out=6)   ###this line changed
-    zaxe<-qnorm(uaxe,mu.x0 ,sd.x0)    ###this line changed
+    uaxe<-seq(0.01,.99,length.out=6)   
+    zaxe<-qnorm(uaxe,mu.x0 ,sd.x0)    
     splineres<-smooth.spline(u.axe,dvals,df=df)
     
     y.acc<-floor(log10(max(splineres$y)))
