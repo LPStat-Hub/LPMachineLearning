@@ -398,7 +398,6 @@ pheatmap::pheatmap(coefmat1,color=blues9,cluster_cols = FALSE,cluster_rows = FAL
 ```
 
 ![](Readme_files/figure-gfm/gsp_plot-1.png)<!-- -->
-
 #### Distributional Impact Function
 
 This function deal with the "XYZ" problem where we observe covariates
