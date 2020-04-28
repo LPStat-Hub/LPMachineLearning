@@ -474,12 +474,13 @@ ggplot(data=bar_df,aes(x=age, y=value, fill=variable))+
 1. Mukhopadhyay, S., and Wang, K. (2020) <b>Breiman's "Two Cultures"
 Revisited and Reconciled</b>. <i>Technical Report</i>.
 
-2. Mukhopadhyay, S. (2017) <b>Large-Scale Mode Identification and Data-Driven Sciences</b>. <i>Electronic Journal of Statistics</i>, 11 215-240.
+2. 5. Mukhopadhyay, S. and Parzen, E. (2020) <b>Nonparametric Universal Copula Modeling</b>. <i>Applied Stochastic Models in Business and Industry, special issue on "Data Science"</i>, 36(1), 77-94.
 
-3. Mukhopadhyay, S. and Parzen, E. (2018) <b>Nonlinear Time Series Modeling: A Unified Perspective, Algorithm, and Application</b>. <i>J. Risk and Financial Management, Special Issue "Applied Econometrics"</i>, 11(3),  37, 1-17.
+3. Mukhopadhyay, S., and Wang, K* (2019) <b>A Nonparametric Approach to High-dimensional K-sample Comparison Problems</b>. <i>Biometrika</i> (in press).
 
 4. Mukhopadhyay, S. and Fletcher,  D*. (2018)  <b>Generalized Empirical Bayes Modeling via Frequentist Goodness-of-Fit</b>. <i>Nature: Scientific Reports</i>, 8 (9983), 1-15.
 
-5. Mukhopadhyay, S. and Parzen, E. (2020) <b>Nonparametric Universal Copula Modeling</b>. <i>Applied Stochastic Models in Business and Industry, special issue on "Data Science"</i>, 36(1), 77-94.
+5. Mukhopadhyay, S. and Parzen, E. (2018) <b>Nonlinear Time Series Modeling: A Unified Perspective, Algorithm, and Application</b>. <i>J. Risk and Financial Management, Special Issue "Applied Econometrics"</i>, 11(3),  37, 1-17.
 
-6. Mukhopadhyay, S., and Wang, K* (2019) <b>A Nonparametric Approach to High-dimensional K-sample Comparison Problems</b>. <i>Biometrika</i> (in press).
+6. Mukhopadhyay, S. (2017) <b>Large-Scale Mode Identification and Data-Driven Sciences</b>. <i>Electronic Journal of Statistics</i>, 11 215-240.
+
