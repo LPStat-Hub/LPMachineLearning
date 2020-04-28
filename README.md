@@ -190,11 +190,8 @@ UPM.out<-UPM(x,y,X.test,m=c(6,6),method.ml='glmnet',quantile.probs = c(.03,.15,.
 ```
 
 ``` r
-Q.mat <- UPM.out$quantiles
-```
-
-``` r
 #plotting the quantiles
+Q.mat <- UPM.out$quantiles
 par(mar=c(4,4,2,2))
 plot(x,y,cex=.4,col="gray75",xlab="Age",ylab="BMI",cex.lab=1.15)
 lines(smooth.spline(X.test,Q.mat[,1]), lty = 1, col = "dodgerblue2",lwd=1.5)
