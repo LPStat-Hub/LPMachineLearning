@@ -29,8 +29,8 @@ Once installed, the package provide tools for following tasks:
 
 This example uses the Movie box-office revenue data(Voudouris et al.,
 2012). The goal of this study is to build a forecasting model for film
-revenue that predicts the distribution of \(y\) given some \(x\). In
-this case, we use \(x=12\) for demonstration.
+revenue that predicts the distribution of $y$ given some $x$. In
+this case, we use $x=12$ for demonstration.
 
 ``` r
 library(LPMachineLearning)
