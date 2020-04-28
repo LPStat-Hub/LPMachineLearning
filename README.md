@@ -326,8 +326,6 @@ yhat <- as.matrix(predict(modelfit,reg.dat))
 HCA(X,y-yhat,m=c(4,6),method.ml='lm')
 ```
 
-![](Readme_files/figure-gfm/hca_plot-1.png)<!-- -->
-
     ## $f.stat
     ## [1]  4.580912 26.341119  3.464914  3.275716  1.443675  1.296246
     ## 
