@@ -18,7 +18,7 @@ Currently private repository, user can install it using the devtools:
 
 ``` r
 library(devtools)
-install_github("LPML-hub/LPMachineLearning",auth_token = 'b59b80e7308e43df6ed800597149c63748a3b9eb')
+install_github("LPStat-Hub/LPMachineLearning",auth_token = 'b59b80e7308e43df6ed800597149c63748a3b9eb')
 ```
 
 ### Usage Examples
