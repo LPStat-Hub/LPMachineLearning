@@ -473,12 +473,6 @@ ggplot(data=bar_df,aes(x=age, y=value, fill=variable))+
 ```
 
 ![](Readme_files/figure-gfm/dif_plot-1.png)<!-- -->
-
-``` r
-detach(rosnerFEV)
-```
-
-
 ### Key References
 1. Mukhopadhyay, S., and Wang, K. (2020)
 <b>Breiman's 'Two Cultures' Revisited and Reconciled</b>. <i>Technical Report</i>.
