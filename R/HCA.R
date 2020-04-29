@@ -16,7 +16,7 @@ HCA<-function(X,y,m=c(4,6),alpha=0.05,method.ml='glmnet'){
     switch(method.ml,'glmnet'={
       opt.lasso <- glmnet::cv.glmnet(Tx, Ty[,i], family="gaussian", type.measure="mse",nfolds=20)
       fit.lasso <- glmnet::glmnet(Tx, Ty[,i], family="gaussian", lambda=opt.lasso$lambda.1se)
-      ind<-which(abs(fit.lasso$beta)>0)
+      ind<-which(abs(as.numeric(fit.lasso$beta))>0)
       reg.dat<-as.data.frame(cbind(Ty[,i],Tx[, ind]))
       names(reg.dat)<-c('Tyj',colnames(Tx)[ind])
       frmla<-'Tyj~.-1'
