@@ -12,9 +12,16 @@ HCA<-function(X,y,m=c(4,6),alpha=0.05,method.ml='glmnet'){
   x.sig<-matrix(0,m[2],ncol(X))
   dict<-colnames(Tx)
   for(i in 1:m[2]){
-    
     switch(method.ml,'glmnet'={
-      opt.lasso <- glmnet::cv.glmnet(Tx, Ty[,i], family="gaussian", type.measure="mse",nfolds=20)
+	  nfolds0<-max(5,floor(nrow(X)/10))
+	  if(nfolds0>=10 & nfolds0<20){
+		nfolds<-10
+	  }else if(nfolds0>=20){
+	    nfolds<-20
+	  }else if(nfolds0<10){
+		nfolds<-5
+	  }
+      opt.lasso <- glmnet::cv.glmnet(Tx, Ty[,i], family="gaussian", type.measure="mse",nfolds=nfolds)
       fit.lasso <- glmnet::glmnet(Tx, Ty[,i], family="gaussian", lambda=opt.lasso$lambda.1se)
       ind<-which(abs(as.numeric(fit.lasso$beta))>0)
       reg.dat<-as.data.frame(cbind(Ty[,i],Tx[, ind]))
