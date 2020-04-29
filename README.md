@@ -13,11 +13,6 @@ selection, predictive inference methods, and others.
 More details can be found in [R package
 documentation](https://github.com/LPML-hub/LPMachineLearning/blob/master/LPMachineLearning-manual.pdf).
 
-<!---  
-[![CRANstatus](https://www.r-pkg.org/badges/version/grf)](https://cran.r-project.org/package=grf)
-[CRAN Downloads overall](http://cranlogs.r-pkg.org/badges/grand-total/grf)
-[![Build Status](https://travis-ci.com/grf-labs/grf.svg?branch=master)](https://travis-ci.com/grf-labs/grf)
---->
 
 ### Installation
 
@@ -26,6 +21,11 @@ Currently private repository, user can install it using the devtools:
 ``` r
 library(devtools)
 install_github("LPStat-Hub/LPMachineLearning",auth_token = 'b59b80e7308e43df6ed800597149c63748a3b9eb')
+```
+
+The package can be loaded using the command:
+
+``` r
 library(LPMachineLearning)
 ```
 
@@ -35,18 +35,17 @@ Once installed, the package provide tools for following tasks:
 
 #### Pivot Uncertainty modeling
 
-This example uses the Movie box-office revenue data(Voudouris et al.,
+This example uses the Movie box-office revenue data (Voudouris et al.,
 2012). The goal of this study is to build a forecasting model for film
-revenue that predicts the distribution of \(y\) given some \(x\). In
-this case, we use \(x=12\) for demonstration.
+revenue that predicts the distribution of Y given some X=x. In this
+case, we use X=12 for demonstration.
 
 ``` r
 #load data
 data(boxOffice)
 attach(boxOffice)
-
 X.test<-12
-fc <-  c("cornflowerblue", "lightseagreen")
+fc <-  c("cornflowerblue", "lightseagreen")  
 plot(x[x>9],y[x>9],cex=.8,col="gray70",ylab="After first week box office revenues",xlab="Opening day box office revenues",cex.lab=.9)
 abline(v=X.test,col=fc,lty=2,lwd=2)
 ```
@@ -54,7 +53,7 @@ abline(v=X.test,col=fc,lty=2,lwd=2)
 ![](Readme_files/figure-gfm/pivot_uncertainty_load-1.png)<!-- -->
 
 Usually the user will provide a pivot as an initial “guess” of the
-conditional distribution at \(x=12\):
+conditional distribution at x=12:
 
 ``` r
 #pivot function
@@ -65,7 +64,7 @@ plot(y.axe, pivot(y.axe),col="lightsalmon1",type="l",ylab="Pivot Density",xlab="
 
 ![](Readme_files/figure-gfm/pivot_uncertainty_pivot-1.png)<!-- -->
 
-This pivot will be used to compute a contrast density:
+This pivot will be used to compute contrast density:
 
 ``` r
 X.test<-12
@@ -79,8 +78,8 @@ dhat.plot.norm<-function(LPcden.obj,df=15,mu.x0,sd.x0,col='steelblue'){
   for(plotid in 1:length(LPcden.obj$dhat)){
     
     dhat.obj<-LPcden.obj$dhat[[plotid]]
-    u.axe<-seq(0.01,.99,length.out=1000)   
-    y.axe<-qnorm(u.axe,mu.x0 ,sd.x0)   
+    u.axe<-seq(0.01,.99,length.out=1000)  
+    y.axe<-qnorm(u.axe,mu.x0 ,sd.x0)    
     dvals<-dhat.obj(y.axe)
     delta0<-diff(range(dvals))
     par(mar=c(5,4.5,2,2))
@@ -116,8 +115,8 @@ abline(h=1,lty=2,col='bisque3')
 
 ![](Readme_files/figure-gfm/pivot_uncertainty_cden-1.png)<!-- -->
 
-Multiplying the pivot with this contrast density will net us the
-conditional density at \(x=12\):
+Multiplying the pivot with this contrast density will lead us to the
+conditional density at x=12:
 
 ``` r
 #conditional distribution density
@@ -139,8 +138,8 @@ detach(boxOffice)
 Here we show how we can provide sharpened samples compatible with the
 underlying stochastic data generating mechanism using our contrast
 density. We use the butterfly example in the reference paper for
-demonstration and want to obtain sharpened samples at \(x=2\). First, we
-provide some sample points from the interval \(x\in [0,4]\)
+demonstration and want to obtain sharpened samples at x=2. First, we
+provide some sample points from the interval x between [0,4].
 
 ``` r
 #load data
@@ -152,7 +151,7 @@ dtrue<-function(x){
   dnorm(x,mean=X.test)*.5+dnorm(x,mean=-X.test)*.5
 }
 #pivot samples
-y.pivot<- y[x<4 & x>0]  #--pick a smart samples to start with
+y.pivot<- y[x<4 & x>0]  
 ygrid <- seq(-6,6,length=1000)
 hist(y.pivot,col="grey95",20,prob=TRUE,ylim=c(0,.2),xlab="",main="")
 box()
@@ -162,7 +161,7 @@ lines(ygrid,dtrue(ygrid),col='dodgerblue2',lwd=2)
 ![](Readme_files/figure-gfm/dsharp_data-1.png)<!-- -->
 
 Using our `UPM()` function with argument `nsample=length(y.pivot)` will
-generate the d-sharpened samples at \(x=2\):
+generate the d-sharpened samples at x=2:
 
 ``` r
 #generate d-sharp samples
@@ -226,7 +225,6 @@ whether the models from UPM are congruent with the observed data.
 #load data
 data(butterfly)
 attach(butterfly)
-
 #compute the goodness of fit by picking a holdout set as test set.
 n=length(y)
 set.seed(129)
@@ -236,6 +234,7 @@ U.knn <- gof.knn$q.residuals
 ```
 
 ``` r
+#plotting the goodness-of-fit results.
 par(mfrow=c(1,2))
 #histogram:
 hist(U.knn,10,prob=TRUE,col="grey95",main='Histogram',xlab="U")
@@ -266,9 +265,11 @@ X<-autompg[,-8]
 y<-autompg[,8]
 ind <- 390  #390 is the dodge rampage
 X.test=X[ind,]
+```
 
+``` r
+#The credMass argument indicates the target mass under curve for HD Interval
 set.seed(1)
-##The credMass argument indicates the target mass under curve for HD Interval
 UPM.out<-UPM(X,y,X.test,m=c(4,6),method.ml='gbm',max_depth=10, credMass=.68,nsample=1000,quantile.probs=c(.16,.84))
 ```
 
@@ -285,7 +286,7 @@ points(UPM.out$cond.mean[k],.05,pch=16,cex=1.25,col="red")
 points(y[ind[k]],.05,pch=16,cex=1.25,col="darkgreen")
 legend("topright",c("cond mean", "actual mpg"),pch=c(16,16),col=c("red","darkgreen"),cex=1)
 
-#hdinterval
+#hdPI
 hdin<-UPM.out$hdi.laser$hdi[[1]]
 segments(hdin[, 1], 0.02, hdin[, 2], 0.02, lwd=2, col='darkgoldenrod1')
 segments(hdin, rep(0.005,2), hdin, rep(0.035,2), lwd=1.5, col='darkgoldenrod1')
@@ -319,6 +320,9 @@ y<-onlineNews[,60]
 #mean estimates using the GBM regression
 library(h2o)
 h2o.init()
+```
+
+``` r
 h2o.no_progress()
 reg.dat<-as.h2o(cbind(y,X))
 modelfit<- h2o.gbm(y=1, training_frame = reg.dat) 
@@ -333,11 +337,9 @@ HCA.result<-HCA(X,y-yhat,m=c(4,6),method.ml='glmnet')
 ``` r
 #plotting
 dev.ratio <- HCA.result$dev.rate
-dev.ratio[HCA.result$pval >.05] <- 0
 bars<-matrix(dev.ratio,nrow=1)
 colnames(bars)<-paste0('LP',1:6)
-par(mar = c(4.2, 4.5, 2, 2),mfrow=c(1,1))  #bottom, left, top and right margins 
-barplot(bars,col="bisque",xlab='components',ylab=expression(R[LP]^2*"  Heterogeneity Statistic"),main="")  #plotting prob: axis stops at .15
+barplot(bars,col="bisque",xlab='components',ylab=expression(R[LP]^2*"  Heterogeneity Statistic"),main="")  
 ```
 
 ![](Readme_files/figure-gfm/hca_plot-1.png)<!-- -->
@@ -355,13 +357,13 @@ data(cholesterol)
 attach(cholesterol)
 m=c(length(unique(x))-1,4)
 #perform HCA
-comp_result<- HCA(x,y,m=m,method.ml='lm',alpha=NULL)
+HCA.ldl<- HCA(x,y,m=m,method.ml='lm',alpha=NULL)
 ```
 
 ``` r
 #plotting the statistics
-dev.ratio <- length(x)*comp_result$dev.rate
-bars<-matrix(dev.ratio,nrow=1)
+lp.stat <- length(x)*HCA.ldl$dev.rate
+bars<-matrix(lp.stat,nrow=1)
 colnames(bars)<-c("KW*","MOOD*","SKEW","KURT")
 barplot(bars,col="bisque",xlab='Components of K-sample Analysis',ylab="",main="",ylim=c(0,12)) 
 ```
@@ -375,11 +377,10 @@ detach(cholesterol)
 #### Generalized shape predictors
 
 Generalized shape predictors are those that influence the whole
-conditional distribution (beyond just mean) of the response \(Y\). This
+conditional distribution (beyond just mean) of the response Y. This
 function finds the most relevant attributes that are predictive for
 certain shapes (that user is interested in) of the conditional
-distribution \(f_{Y|X=x}(y)\). Here’s an example using the online news
-popularity data:
+distribution. Here’s an example using the online news popularity data:
 
 ``` r
 #load data
@@ -387,8 +388,10 @@ library(glmnet)
 data(onlineNews)
 X<-onlineNews[,-60]
 y<-onlineNews[,60]
+```
 
-#use lasso feature selection on each order: location, scale and skewness
+``` r
+#Lasso feature selection on each order: location, scale and skewness
 coefmat<-matrix(0,3,ncol(X))
 X<-as.matrix(X)
 Tx<-LP.basis(X,m=1)
@@ -407,7 +410,6 @@ for(i in 1:3){
 ind_sig<-order(colSums(coefmat^2),decreasing = TRUE)[1:10]
 coefmat1<-t(abs(coefmat[,ind_sig]))
 varnames<-colnames(X)[ind_sig]
-
 rownames(coefmat1)<-varnames
 colnames(coefmat1)<-c('location','scale','skewness')
 pheatmap::pheatmap(coefmat1,color=blues9,cluster_cols = FALSE,cluster_rows = FALSE)
@@ -417,10 +419,10 @@ pheatmap::pheatmap(coefmat1,color=blues9,cluster_cols = FALSE,cluster_rows = FAL
 
 #### Distributional Impact Function
 
-This function deal with the “XYZ” problem where we observe covariates
-\(X\), response \(Y\) and a binary treatment \(Z\). This function
-captures the heterogeneous impact from the treatment \(Z\) on the
-response \(Y\), as a function of the covariate \(X\).
+This function deal with the “XYZ” problem where we observe covariates X,
+response Y and a binary treatment Z. This function captures the
+heterogeneous impact from the treatment Z on the response Y, as a
+function of the covariate X.
 
 Start with the Rosner’s FEV data set:
 
@@ -435,10 +437,7 @@ attach(rosnerFEV)
 
 ``` r
 #computing DIF
-m<-c(2,4)
-method<-'gbm'
-X.test<-12:15
-DIF_out<-DIF(x,y,z,m=m,X.test=X.test,method=method)
+DIF_out<-DIF(x,y,z,m=c(2,4),X.test=12:15,method='gbm')
 ```
 
 The output also provides the “composition” of each DIF value, showing us
@@ -459,7 +458,6 @@ library(reshape2)
 library(ggplot2)
 databar<-as.data.frame(CIFcomp)
 databar$age=paste0('Age=',12:15)
-
 bar_df<-melt(databar,id='age')
 ggplot(data=bar_df,aes(x=age, y=value, fill=variable))+
   geom_bar(stat="identity",position = position_stack(reverse = TRUE))+
@@ -478,23 +476,10 @@ ggplot(data=bar_df,aes(x=age, y=value, fill=variable))+
 
 ![](Readme_files/figure-gfm/dif_plot-1.png)<!-- -->
 
-<!--- 
- -HCA: Fig.6 (d) OnlineNews
- -Pivot Uncertainty modeling: Fig. 7, pivot, d, data, cond.den with X.test=12.
- -Goddness of Fit: knn with butterfly, Fig. 8 (display side-by-side)
- -d-sharpening: Fig 9. (Butterfly data); all happening through contrast density fun. Sharpen diffused samples
- -Ksample Problem: fig.10 cholesterol
- -GSP: Fig. 12
- -DIF: Fig. 13 FEV barplots
- -Quantile Regression: Fig. 14 (Dutch)
- -Prediction Interval: Fig. 15b (Dodge Rampage)
+``` r
+detach(rosnerFEV)
+```
 
---->
-
-<!--- 
-### Developing
-[//]: #In addition to providing out-of-the-box forests for quantile regression and causal effect estimation, GRF provides a framework for creating forests tailored to new statistical tasks. If you'd like to develop using GRF, please consult the [algorithm reference (https://grf-labs.github.io/grf/REFERENCE.html) and [development guide](https://grf-labs.github.io/grf/DEVELOPING.html).
---->
 
 ### References
 
