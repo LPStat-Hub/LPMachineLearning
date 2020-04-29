@@ -334,8 +334,8 @@ HCA.result<-HCA(X,y-yhat,m=c(4,6),method.ml='glmnet')
 
 ``` r
 #plotting
-dev.ratio <- HCA.result$dev.rate
-bars<-matrix(dev.ratio,nrow=1)
+lp.stat <- HCA.result$dev.rate
+bars<-matrix(lp.stat,nrow=1)
 colnames(bars)<-paste0('LP',1:6)
 barplot(bars,col="bisque",xlab='components',ylab=expression(R[LP]^2*"  Heterogeneity Statistic"),main="")  
 ```
