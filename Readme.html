@@ -365,9 +365,6 @@ summary {
 </div>
 
 
-<div id="readme" class="section level1">
-<h1>Readme</h1>
-</div>
 <div id="lpmachinelearning" class="section level1">
 <h1>LPMachineLearning <a href="https://github.com/LPML-hub/LPMachineLearning/"></a></h1>
 <p>Main files for LPMachineLearning package. This is package provide Statistical modeling tools for converting a black-box ML algorithm into an interpretable conditional distribution prediction machine, which provides a wide range of facilities, including goodness-of-fit, various types of exploratory graphical diagnostics, generalized feature selection, predictive inference methods, and others.</p>
@@ -575,11 +572,11 @@ legend(&quot;topleft&quot;,c(&quot;hdPI&quot;,&quot;qPI&quot;,&quot;gPI&quot;),c
 <pre class="r"><code>#load data
 data(onlineNews)
 X&lt;-onlineNews[,-60]
-y&lt;-onlineNews[,60]
-#mean estimates using the GBM regression
+y&lt;-onlineNews[,60]</code></pre>
+<pre class="r"><code>#mean estimates using the GBM regression
 library(h2o)
-h2o.init()</code></pre>
-<pre class="r"><code>h2o.no_progress()
+h2o.init()
+h2o.no_progress()
 reg.dat&lt;-as.h2o(cbind(y,X))
 modelfit&lt;- h2o.gbm(y=1, training_frame = reg.dat) 
 yhat &lt;- as.matrix(predict(modelfit,reg.dat))</code></pre>

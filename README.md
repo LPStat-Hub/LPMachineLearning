@@ -1,5 +1,3 @@
-Readme
-================
 
 # LPMachineLearning <a href='https://github.com/LPML-hub/LPMachineLearning/'></a>
 
@@ -317,12 +315,12 @@ the Online news popularity data set.
 data(onlineNews)
 X<-onlineNews[,-60]
 y<-onlineNews[,60]
-#mean estimates using the GBM regression
-library(h2o)
-h2o.init()
 ```
 
 ``` r
+#mean estimates using the GBM regression
+library(h2o)
+h2o.init()
 h2o.no_progress()
 reg.dat<-as.h2o(cbind(y,X))
 modelfit<- h2o.gbm(y=1, training_frame = reg.dat) 
