@@ -296,7 +296,7 @@ segments(Q.mat, rep(-.035,2), Q.mat, rep(-0.005,2), lwd=2, col='azure4')
 
 #gPI
 s<-sd(UPM.out$samples)
-mm<-mean(UPM.out$samples)
+mm<-UPM.out$cond.mean
 
 segments(mm-s, -0.06, mm+s, -0.06, lwd=2, col='chocolate3')
 segments(c(mm-s,mm+s), rep(-.075,2), c(mm-s,mm+s), rep(-.045,2), lwd=2, col='chocolate3')
