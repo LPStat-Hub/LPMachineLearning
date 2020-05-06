@@ -614,18 +614,10 @@ library(glmnet)
 data(onlineNews)
 X&lt;-onlineNews[,-60]
 y&lt;-onlineNews[,60]</code></pre>
-<pre class="r"><code>#Lasso feature selection on each order: location, scale and skewness
-coefmat&lt;-matrix(0,3,ncol(X))
-X&lt;-as.matrix(X)
-Tx&lt;-LP.basis(X,m=1)
-Ty&lt;-as.matrix(LP.basis(y,m=3,Fmid=FALSE))
+<pre class="r"><code>#GSP function for retrieving the coefficients:
 set.seed(51)
-for(i in 1:3){
-  opt.lasso &lt;- cv.glmnet(Tx, Ty[,i], family=&quot;gaussian&quot;, type.measure=&quot;mse&quot;,nfolds=20)
-  fit.lasso &lt;- glmnet(Tx, Ty[,i], family=&quot;gaussian&quot;, lambda=opt.lasso$lambda.1se)
-  coef0&lt;-fit.lasso$beta
-  coefmat[i,]&lt;-as.numeric(coef0)
-}</code></pre>
+gsp.out&lt;-GSP(X,y,comp=c(1:3),mx=1)
+coefmat&lt;-gsp.out$coef[1,,]</code></pre>
 <pre class="r"><code>#plotting the top 10 coefficients
 ind_sig&lt;-order(colSums(coefmat^2),decreasing = TRUE)[1:10]
 coefmat1&lt;-t(abs(coefmat[,ind_sig]))

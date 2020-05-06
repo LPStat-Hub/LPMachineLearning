@@ -389,18 +389,10 @@ y<-onlineNews[,60]
 ```
 
 ``` r
-#Lasso feature selection on each order: location, scale and skewness
-coefmat<-matrix(0,3,ncol(X))
-X<-as.matrix(X)
-Tx<-LP.basis(X,m=1)
-Ty<-as.matrix(LP.basis(y,m=3,Fmid=FALSE))
+#GSP function for retrieving the coefficients:
 set.seed(51)
-for(i in 1:3){
-  opt.lasso <- cv.glmnet(Tx, Ty[,i], family="gaussian", type.measure="mse",nfolds=20)
-  fit.lasso <- glmnet(Tx, Ty[,i], family="gaussian", lambda=opt.lasso$lambda.1se)
-  coef0<-fit.lasso$beta
-  coefmat[i,]<-as.numeric(coef0)
-}
+gsp.out<-GSP(X,y,comp=c(1:3),mx=1)
+coefmat<-gsp.out$coef[1,,]
 ```
 
 ``` r
@@ -473,7 +465,13 @@ ggplot(data=bar_df,aes(x=age, y=value, fill=variable))+
 ```
 
 ![](Readme_files/figure-gfm/dif_plot-1.png)<!-- -->
-### Key References
+
+``` r
+detach(rosnerFEV)
+```
+
+
+### References
 1. Mukhopadhyay, S., and Wang, K. (2020)
 <b>Breiman's 'Two Cultures' Revisited and Reconciled</b>. <i>Technical Report</i>.
 
