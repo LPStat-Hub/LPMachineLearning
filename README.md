@@ -1,8 +1,4 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
+
 
 # LPMachineLearning <a href='https://github.com/LPML-hub/LPMachineLearning/'></a>
 
