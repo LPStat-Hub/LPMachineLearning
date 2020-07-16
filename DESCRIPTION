@@ -2,7 +2,7 @@ Package: LPMachineLearning
 Type: Package
 Title: Integrated Nonparametric Statistical Machine Learning
 Version: 1.0
-Date: 2020-04-19
+Date: 2020-07-15
 Author: Subhadeep Mukhopadhyay, Kaijun Wang
 Maintainer: Kaijun Wang <kaijunwang.19@gmail.com>
 Description: Statistical modeling tools for converting a black-box ML algorithm 
@@ -13,4 +13,4 @@ Description: Statistical modeling tools for converting a black-box ML algorithm
 	Mukhopadhyay, S. and Wang, K. (2020, Technical Report).
 Imports: graphics,methods,glmnet,caret,h2o,leaps,HDInterval,parallel
 Depends: R (>= 3.5.0),stats,orthopolynom
-License: GPL-2
+License: Apache License (>= 2.0)
