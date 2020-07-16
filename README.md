@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2a609214f8769fa88e7c7cf1bf048ca71bf20e61
 
 # LPMachineLearning <a href='https://github.com/LPML-hub/LPMachineLearning/'></a>
 
