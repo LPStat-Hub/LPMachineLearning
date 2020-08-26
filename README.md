@@ -473,7 +473,7 @@ detach(rosnerFEV)
 
 ### References
 1. Mukhopadhyay, S., and Wang, K. (2020)
-<b>Breiman's 'Two Cultures' Revisited and Reconciled</b>. <i>Technical Report</i>.
+<b>Statistical Machine Learning: An Integrated Approach</b>. <i>Technical Report</i>.
 
 2. Mukhopadhyay, S. and Parzen, E. (2020) <b>Nonparametric Universal Copula Modeling</b>, <i>Applied Stochastic Models in Business and Industry, special issue on "Data Science"</i>, 36(1), 77-94.
 
