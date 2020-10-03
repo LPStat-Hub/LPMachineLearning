@@ -1,7 +1,7 @@
 UPM <-
 function(X,y,X.test,pivot=NULL,m=c(4,6),method.ml='glmnet',LP_smooth='BIC',
-              nsample=NULL, quantile.probs=NULL, credMass=.6, 
-			  centering=TRUE,parallel=FALSE,...){ 
+              nsample=NULL, quantile.probs=NULL, credMass=.6,
+			  centering=TRUE,parallel=FALSE,...){
   extraparms<-list(...)
   z<-y
   X<-as.matrix(X)
@@ -19,12 +19,12 @@ function(X,y,X.test,pivot=NULL,m=c(4,6),method.ml='glmnet',LP_smooth='BIC',
       extraparms$k<-ceiling(sqrt(nrow(X)))
     }
   }
-  
-  
+
+
   Tx<-LP.basis(X,m[1])
-  
+
   ##centering codes; Using LP, with selected method of smoothing
-  
+
   if(max(is(pivot)=='function')){centering<-FALSE}
   if(centering==TRUE){
     centerproc<-z.lp.center(X,Tx,z,method.ml,X.test,m,extraparms)
@@ -36,14 +36,14 @@ function(X,y,X.test,pivot=NULL,m=c(4,6),method.ml='glmnet',LP_smooth='BIC',
     z.mu.test<-rep(0,nrow(X.test))
     zmean<-rep(0,length(z))
   }
-  
-  
+
+
   ##how to adjust pivot so it fits y?
-  
+
   Ty<-lpbasis(y,m=m[2],pivot=pivot)
   colnames(Ty)<-paste('Ty',1:m[2],sep='')
-  
-  
+
+
   #####Getting Coefficients
   LP.coef<-matrix(0,nrow(X.test),m[2])
   colnames(LP.coef)<-paste('LP[',1:m[2],']',sep='')
@@ -64,9 +64,9 @@ function(X,y,X.test,pivot=NULL,m=c(4,6),method.ml='glmnet',LP_smooth='BIC',
   out$Ty<-Ty
   out$z<-z
   out$centering<-centering
-  
+
   #####Getting conditional density
-  
+
   dhat<-cond.denZ<-list()
   for(i in 1:nrow(X.test)){
     LPcoef <- LP.coef[i,]
@@ -85,7 +85,7 @@ function(X,y,X.test,pivot=NULL,m=c(4,6),method.ml='glmnet',LP_smooth='BIC',
       y0<-density(pivot)$x
     }
     Ty0<-Predict.LP.poly(y,Ty,y0)
-    
+
     z.mu<-z.mu.test[i]
     dd<- 1+as.vector(LPcoef%*%t(Ty))
     dd[dd<0]<-0
@@ -95,10 +95,10 @@ function(X,y,X.test,pivot=NULL,m=c(4,6),method.ml='glmnet',LP_smooth='BIC',
     dhat[[i]]<- d.val
     cond.denZ[[i]]<-approxfun(y0+z.mu,condYX,method='linear',rule=2)
   }
-  
+
   out$cond.den<-cond.denZ
   out$dhat<-dhat
-  
+
   #####Getting samples
   if(!is.null(nsample)){
     if(parallel==TRUE){
@@ -107,19 +107,19 @@ function(X,y,X.test,pivot=NULL,m=c(4,6),method.ml='glmnet',LP_smooth='BIC',
     }else{
       cl<-NULL
     }
-    
+
     sample.list<-matrix(0,nsample,nrow(X.test))
     for(i in 1:nrow(X.test)){
       Lcoef<-as.matrix(LP.coef[i,])
       z.mu<-z.mu.test[i]
-      sample.list[,i]<-g2l.sampler(nsample,LP.par=Lcoef,Y=y,clusters=cl)+z.mu
+      sample.list[,i]<-g2l.sampler(nsample,LP.par=Lcoef,Y=y,pivot=pivot,clusters=cl)+z.mu
     }
     colnames(sample.list)<-paste0('Xtest',1:nrow(X.test))
-    
+
     if(parallel==TRUE){
       stopCluster(cl)
     }
-    
+
     out$samples<-sample.list
     ######HDIntervals
     hdi.list<-list(x=X.test,hdi=list())
@@ -129,7 +129,7 @@ function(X,y,X.test,pivot=NULL,m=c(4,6),method.ml='glmnet',LP_smooth='BIC',
     }
     out$hdi.laser<-hdi.list
   }
-  
+
   if(!is.null(quantile.probs)){
 	out$quantiles<-UPM.quantile(out, probs = quantile.probs)
   }

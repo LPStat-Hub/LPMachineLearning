@@ -11,6 +11,6 @@ Description: Statistical modeling tools for converting a black-box ML algorithm
 	types of exploratory graphical diagnostics, generalized feature selection, 
 	predictive inference methods, and others. The primary reference is 
 	Mukhopadhyay, S. and Wang, K. (2020, Technical Report).
-Imports: graphics,methods,glmnet,caret,h2o,leaps,HDInterval,parallel
+Imports: graphics,methods,glmnet,caret,h2o,leaps,HDInterval,pdqr,parallel
 Depends: R (>= 3.5.0),stats,orthopolynom
 License: Apache License (>= 2.0)
