@@ -164,7 +164,7 @@ generate the d-sharpened samples at x=2:
 ``` r
 #generate d-sharp samples
 set.seed(3302)
-UPM.out<-UPM(x,y,X.test,ref.info=y.pivot,m=c(4,4),method.ml='knn',k=15,nsample=length(y.pivot))
+UPM.out<-UPM(x,y,X.test,pivot=y.pivot,m=c(4,4),method.ml='knn',k=15,nsample=length(y.pivot))
 y.sharp <- UPM.out$samples
 ```
 
