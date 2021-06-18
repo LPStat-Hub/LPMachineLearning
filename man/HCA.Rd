@@ -3,7 +3,7 @@
 \title{
 Heterogeneity component analysis
 }
-\description{ 
+\description{
 This function performs heterogeneity component analysis of of the response variable \eqn{Y} for identifying which shape compliments are changing with the covarite \eqn{X}.
 }
 \usage{

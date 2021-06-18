@@ -1,6 +1,6 @@
 UPM <-
 function(X,y,X.test,pivot=NULL,m=c(4,6),method.ml='glmnet',LP_smooth='BIC',
-              nsample=NULL, quantile.probs=NULL, credMass=.6,
+        nsample=NULL, quantile.probs=NULL, credMass=.6,
 			  centering=TRUE,parallel=FALSE,...){
   extraparms<-list(...)
   z<-y
@@ -45,24 +45,42 @@ function(X,y,X.test,pivot=NULL,m=c(4,6),method.ml='glmnet',LP_smooth='BIC',
 
 
   #####Getting Coefficients
-  LP.coef<-matrix(0,nrow(X.test),m[2])
-  colnames(LP.coef)<-paste('LP[',1:m[2],']',sep='')
-  for(i in 1:nrow(X.test)){
-    X.test0<-matrix(X.test[i,],nrow=1)
-    LP.coef0<-sapply(1:m[2],LPregression,Tx,Ty,X,X.test0,m,method.ml,extraparms)
-    if(!is.null(LP_smooth)&method.ml=='subset'){
-      LP.coef[i,]<-LP.smooth(LP.coef0,n=length(y),method=LP_smooth)
-    }else if(method.ml=='subset'){
-      LP.coef[i,]<-LP.coef0[1,]
-    }else{
-      LP.coef[i,]<-LP.coef0
+  # LP.coef<-matrix(0,nrow(X.test),m[2])
+  # colnames(LP.coef)<-paste('LP[',1:m[2],']',sep='')
+  # for(i in 1:nrow(X.test)){
+  #   X.test0<-matrix(X.test[i,],nrow=1)
+  #   LP.coef0<-sapply(1:m[2],LPregression,Tx,Ty,X,X.test0,m,method.ml,extraparms)
+  #   if(!is.null(LP_smooth)&method.ml=='subset'){
+  #     LP.coef[i,]<-LP.smooth(LP.coef0,n=length(y),method=LP_smooth)
+  #   }else if(method.ml=='subset'){
+  #     LP.coef[i,]<-LP.coef0[1,]
+  #   }else{
+  #     LP.coef[i,]<-LP.coef0
+  #   }
+  # }
+
+  LP.coef0<-sapply(1:m[2],LPregression,Tx,Ty,X,X.test,m,method.ml,extraparms)
+  ntest=nrow(X.test)
+  if(!is.null(LP_smooth)&method.ml=='subset'){
+    LP.coef<-matrix(0,nrow(X.test),m[2])
+    for(row_id in 1:ntest){
+      LP.coef0j<-LP.coef0[(2*row_id-1):(2*row_id),]
+      LP.coef[row_id,]<-LP.smooth(LP.coef0j,n=length(y),method=LP_smooth)
     }
+  }else if(method.ml=='subset'){
+      LP.coef<-LP.coef0[(2*(1:ntest-1)+1),]
+  }else{
+      LP.coef<-LP.coef0
   }
+  LP.coef<-matrix(LP.coef,ncol=m[2])
+  colnames(LP.coef)<-paste('LP[',1:m[2],']',sep='')
+
   out$LP.coef<-LP.coef
   out$cond.mean<-z.mu.test
   out$y.res<-y
   out$Ty<-Ty
-  out$z<-z
+  out$X.test<-X.test
+  out$y<-z
   out$centering<-centering
 
   #####Getting conditional density

@@ -1,3 +1,7 @@
-^LICENSE\.md$
+^LICENSE$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^.*\.html$
+^.*\.pdf$
+^Readme_files$
+^build_checks\.R$

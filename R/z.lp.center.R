@@ -32,7 +32,7 @@ function(X,Tx,z,method.ml,X.test,m,extraparms){
     if(is.null(extraparms$distribution)){extraparms$distribution="gaussian"}
     if(is.null(extraparms$verbose)){extraparms$verbose=FALSE}
     arglist<-c(list(form=as.formula('z~.'),data=reg.dat0,method=method.ml1),extraparms)
-    modelfit<-do.call(train,arglist) 
+    modelfit<-do.call(train,arglist)
     meanvals<-predict(modelfit,data.frame(Tx))
   }else if(method.ml=='knn'){
     if(is.null(extraparms$k)){
@@ -42,27 +42,26 @@ function(X,Tx,z,method.ml,X.test,m,extraparms){
     modelfit<-do.call(caret::knnreg,arglist)
     meanvals<-predict(modelfit,data.frame(Tx))
   }else if(method.ml %in% c('gbm','rf')){
-    reg.dat0<-as.h2o(cbind( z,Tx))
-    fun0<-switch(method.ml,'gbm'=h2o.gbm,'rf'=h2o.randomForest)
+    reg.dat0<-h2o::as.h2o(cbind( z,Tx))
+    fun0<-switch(method.ml,'gbm'=h2o::h2o.gbm,'rf'=h2o::h2o.randomForest)
     arglist<-c(list(y=1, training_frame = reg.dat0),extraparms)
     modelfit<- do.call(fun0,arglist)
     meanvals<-as.matrix(predict(modelfit,reg.dat0))
   }
   y<-z-meanvals
   z.mu.test<-rep(0,nrow(X.test))
-  for(i in 1:nrow(X.test)){
-    Tx.test<-eLP.poly.predict(X,Tx,X.test[i,],mx=m[1])
-    if(method.ml=='glmnet'){
-      z.mu<-predict(fit.mean,newx=as.matrix(Tx.test), s="lambda.1se",type='response')
-    }else if(method.ml=='subset'){
-      if(centered.flag==0){z.mu<-predict(lm.fit,Tx.test)}
-    }else if(method.ml %in% c("svm","knn")){
-      z.mu<-predict(modelfit,Tx.test)
-    }else if(method.ml %in% c("gbm","rf")){
-      z.mu<-as.matrix(predict(modelfit,h2o::as.h2o(Tx.test)))
-    }
-    z.mu.test[i]<-as.numeric(z.mu)
+  Tx.test<-eLP.poly.predict(X,Tx,X.test,mx=m[1])
+  if(method.ml=='glmnet'){
+    z.mu<-predict(fit.mean,newx=as.matrix(Tx.test), s="lambda.1se",type='response')
+  }else if(method.ml=='subset'){
+    if(centered.flag==0){z.mu<-predict(lm.fit,Tx.test)}
+  }else if(method.ml %in% c("svm","knn")){
+    z.mu<-predict(modelfit,Tx.test)
+  }else if(method.ml %in% c("gbm","rf")){
+    z.mu<-as.matrix(predict(modelfit,h2o::as.h2o(Tx.test)))
   }
+  z.mu.test<-as.numeric(z.mu)
+
   out<-list(y=y,zmean=meanvals,z.mu.test=z.mu.test)
   return(out)
 }

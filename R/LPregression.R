@@ -2,11 +2,11 @@ LPregression <-
 function(j,Tx,Ty,X,X.test,m,method.ml,extraparms){
   reg.dat<-as.data.frame(cbind( Ty[,j],Tx))
   colnames(reg.dat)[1]<-'Tyj'
-  
-  
+
+
   newdat<-eLP.poly.predict(X,Tx,X.test,m[1])
   frmla<-'Tyj~.-1'
-  
+
   if(method.ml=='glmnet'){
     lp.fit<-glmnet::cv.glmnet(Tx,Ty[,j],family="gaussian",intercept=FALSE)
     lp.pred<-predict(lp.fit,newx=as.matrix(newdat), s="lambda.1se",type='response')
@@ -14,10 +14,10 @@ function(j,Tx,Ty,X,X.test,m,method.ml,extraparms){
     if(ncol(Tx)>1){
       if(ncol(Tx)>50){big.flag=TRUE}else{big.flag=FALSE}
       fit1 <- leaps::regsubsets(Tyj~., data = reg.dat,intercept=FALSE,really.big=big.flag)
-      
+
       id<-which.min(summary(fit1)$bic)
       coefi <- coef(fit1, id = id)
-      
+
       frmla<-paste0('Tyj~',names(coefi)[1])
       if(length(coefi)>1){
         for(i in 2:length(coefi)){
@@ -28,6 +28,7 @@ function(j,Tx,Ty,X,X.test,m,method.ml,extraparms){
     }
     lp.fit <- lm( as.formula(frmla),data=reg.dat)
     lp.pred<-predict(lp.fit,newdata=newdat,se.fit=TRUE)
+    lp.pred<-rbind(as.numeric(lp.pred$fit),as.numeric(lp.pred$se.fit))
   }else if(method.ml %in% c("svm")){
     method.ml<-match.arg(method.ml, c("svmRadial","gbm","rf"))
     if(is.null(extraparms$distribution)){extraparms$distribution="gaussian"}
@@ -43,14 +44,18 @@ function(j,Tx,Ty,X,X.test,m,method.ml,extraparms){
     knnfit<-do.call(caret::knnreg,arglist)
     lp.pred<-predict(knnfit,newdata=newdat)
   }else if(method.ml %in% c("gbm","rf")){
-    dat.h2o<-as.h2o(cbind( Ty[,j],Tx))
-    fun0<-switch(method.ml,'gbm'=h2o.gbm,'rf'=h2o.randomForest)
+    dat.h2o<-h2o::as.h2o(cbind( Ty[,j],Tx))
+    fun0<-switch(method.ml,'gbm'=h2o::h2o.gbm,'rf'=h2o::h2o.randomForest)
     arglist<-c(list(y=1, training_frame = dat.h2o),extraparms)
     modelfit<- do.call(fun0,arglist)
-    lp.pred<-as.matrix(predict(modelfit,as.h2o(newdat)))
+    lp.pred<-as.matrix(predict(modelfit,h2o::as.h2o(newdat)))
   }
-  
-  out<-as.numeric(lp.pred)
-  
+
+  if(method.ml=='subset'){
+    out<-lp.pred
+  }else{
+    out<-as.numeric(lp.pred)
+  }
+
   return(out)
 }

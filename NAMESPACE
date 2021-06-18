@@ -7,3 +7,4 @@ importFrom("stats", "approxfun", "as.formula", "coef", "density",
              "dnorm", "ecdf", "integrate", "lm", "pchisq", "pf", "poly",
              "predict", "quantile", "runif")
 importFrom("pdqr","as_d","as_p","as_r")
+importFrom("stats", "smooth.spline")
