@@ -9,15 +9,15 @@
 Uncertainty Prediction Machine
 }
 \description{
-An integrated statistical learning framework that converts an ML-procedure into an uncertainty 
-distribution prediction machine (UPM). Using this function, one can extract the estimated 
-conditional density, contrast density, conditional quantile, highest density prediction interval, 
-and finally, can simulated samples. 
+An integrated statistical learning framework that converts an ML-procedure into an uncertainty
+distribution prediction machine (UPM). Using this function, one can extract the estimated
+conditional density, contrast density, conditional quantile, highest density prediction interval,
+and finally, can generate simulated samples.
 }
 \usage{
-UPM(X, y, X.test, pivot = NULL, m = c(4, 6), method.ml = "glmnet", LP_smooth = "BIC", 
-     nsample = NULL, quantile.probs=NULL, credMass = 0.6, centering = TRUE, 
-     parallel = FALSE, ...)
+UPM(X, y, X.test, pivot = NULL, m = c(4, 6), method.ml = "glmnet", LP_smooth = "BIC",
+     nsample = NULL, quantile.probs=NULL, credMass = 0.6, centering = TRUE,
+     h2o.ini=TRUE,parallel = FALSE, ...)
 }
 \arguments{
   \item{X}{A \eqn{n}-by-\eqn{d} feature matrix}
@@ -31,6 +31,7 @@ UPM(X, y, X.test, pivot = NULL, m = c(4, 6), method.ml = "glmnet", LP_smooth = "
   \item{credMass}{A scalar \eqn{[0, 1]} specifying the mass within the desired coverage of the highest-density prediction interval.}
   \item{centering}{Set to TRUE to allow modeling the conditional mean function and obtain the residuals \eqn{y} using the method given in \code{method.ml}.}
   \item{quantile.probs}{Numeric vector of length \eqn{q} for target quantile values. Leave at \code{NULL} to disable quantile regression.}
+  \item{h2o.ini}{Whether to start a new local h2o server, only for methods \code{gbm} and \code{rf}.}
   \item{parallel}{Use parallel computing for obtaining the relevance samples, mainly used for very huge \code{nsample}, default is FALSE.}
   \item{\dots}{Extra parameters to pass into other functions. Currently supports the arguments for \code{caret::knnreg()}, \code{caret::train()}, \code{h2o::h2o.gbm()}, \code{h2o::h2o.randomForest()}.}
 }
@@ -38,7 +39,7 @@ UPM(X, y, X.test, pivot = NULL, m = c(4, 6), method.ml = "glmnet", LP_smooth = "
 \value{
 A list of values containing:
  \item{LP.coef}{A \eqn{k}-by-\eqn{m} matrix giving the conditional LP-coefficients for \eqn{y} residuals given each \code{X.test}.}
- \item{cond.mean}{conditional means for \eqn{y} given each \code{X.test}.} 
+ \item{cond.mean}{conditional means for \eqn{y} given each \code{X.test}.}
  \item{y.res}{residuals after modeling conditional mean function, equals to \code{y} when \code{centering=FALSE}.}
  \item{cond.den}{list of conditional density functions given each \code{X.test}.}
  \item{dhat}{list of contrast density functions \eqn{d_x} for each \code{X.test}.}

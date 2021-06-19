@@ -1,4 +1,4 @@
-cond_plot<-function(UPMobj,x.target=NULL,yaxe=NULL,spline_smooth=TRUE,...){
+cond_plot<-function(UPMobj,x.target=NULL,yaxe=NULL,spline_smooth=TRUE,add=FALSE,col='red',...){
   ##function for plotting conditional density of the UPM output
   ##X.test_id: which conditional density to plot, corresponding to the order of the UPM input "X.test"
   ##UPMobj: the UPM output
@@ -18,12 +18,19 @@ cond_plot<-function(UPMobj,x.target=NULL,yaxe=NULL,spline_smooth=TRUE,...){
   }else{
     condfun<-UPMobj$cond.den[[X.test_id]]
     if(spline_smooth==FALSE){
-      plot(y.axe,condfun(y.axe),type="l",col="cornflowerblue",lwd=2, xlab="y",ylab="",main="")
+      plotx=y.axe
+      ploty=condfun(y.axe)
     }else{
       splineparms$x=y.axe
       splineparms$y=condfun(y.axe)
       scurve<-do.call(smooth.spline,splineparms)
-      plot(scurve,main='',type="l",col="cornflowerblue",lwd=2, xlab="y",ylab="")
+      plotx=scurve$x
+      ploty=scurve$y
+    }
+    if(add==FALSE){
+      plot(plotx,ploty,type="l",col=col,lwd=2, xlab="y",ylab="",main="")
+    }else{
+      lines(plotx,ploty,type="l",col=col,lwd=2)
     }
   }
 }

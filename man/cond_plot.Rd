@@ -7,14 +7,16 @@ UPM conditional density plot.
 This function plot the conditional density of \eqn{Y|X} for a given UPM output, with option to include spline smoothing for the curve.
 }
 \usage{
-cond_plot(UPMobj,x.target,yaxe=NULL,spline_smooth=TRUE,...)
+cond_plot(UPMobj,x.target=NULL,yaxe=NULL,spline_smooth=TRUE,add=FALSE,col='red',...)
 }
 \arguments{
   \item{UPMobj}{The UPM output object.}
   \item{x.target}{The target \eqn{x} value or vector to plot the conditional density for. Must have already computed in the given UPM object. If left at \code{NULL}, the function will use the first row of \code{X.test}.}
   \item{yaxe}{A pair of values specifying the lower and upper bound of \eqn{y} for conditional density plot. If left at \code{NULL}, the function will use the minimum and maximum value of pooled \code{y}.}
   \item{spline_smooth}{Whether to use spline smoothing on the conditional density plot.}
-  \item{...}{Extra parameters for \code{smooth.spline} when \code{spline_smooth} is set to \code{TRUE}.}
+  \item{add}{Whether to add the curve to an existing plot.}
+  \item{col}{Line color for the plot.}
+  \item{\dots}{Extra parameters for \code{smooth.spline} when \code{spline_smooth} is set to \code{TRUE}.}
 }
 
 \value{

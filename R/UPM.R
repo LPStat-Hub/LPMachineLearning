@@ -1,7 +1,7 @@
 UPM <-
 function(X,y,X.test,pivot=NULL,m=c(4,6),method.ml='glmnet',LP_smooth='BIC',
         nsample=NULL, quantile.probs=NULL, credMass=.6,
-			  centering=TRUE,parallel=FALSE,...){
+			  centering=TRUE,h2o.ini=TRUE,parallel=FALSE,...){
   extraparms<-list(...)
   z<-y
   X<-as.matrix(X)
@@ -12,8 +12,10 @@ function(X,y,X.test,pivot=NULL,m=c(4,6),method.ml='glmnet',LP_smooth='BIC',
   method.list<-c('glmnet','subset','knn','gbm','svm','rf')
   method.ml<-match.arg(method.ml, method.list)
   if(method.ml %in% c("gbm","rf")){
-    h2o::h2o.init()
-    h2o::h2o.no_progress()
+    if(h2o.ini==TRUE){
+      h2o::h2o.init()
+      h2o::h2o.no_progress()
+    }
   }else if(method.ml=="knn"){
     if(is.null(extraparms$k)){
       extraparms$k<-ceiling(sqrt(nrow(X)))
