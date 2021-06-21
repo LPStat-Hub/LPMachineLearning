@@ -28,8 +28,9 @@ cond_plot<-function(UPMobj,x.target=NULL,yaxe=NULL,spline_smooth=TRUE,add=FALSE,
       plotargs$x=scurve$x
       plotargs$y=scurve$y
     }
-    plotargs$xlab='y'
-    plotargs$ylab=''
+    if(is.null(plotargs$xlab)){plotargs$xlab='y'}
+    if(is.null(plotargs$ylab)){plotargs$ylab=''}
+    if(is.null(plotargs$type)){plotargs$type='l'}
     if(add==FALSE){
       do.call(plot,plotargs)
     }else{

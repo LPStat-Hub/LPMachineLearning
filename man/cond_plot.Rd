@@ -37,7 +37,7 @@ y=iris[,2]
 UPM.out <- UPM(X, y, X.test=c(5,5.5),m=c(2,6), method.ml="subset")
 
 cond_plot(UPM.out,x.target=5,yaxe=NULL,spline_smooth=TRUE,
-     spline_args=list(df=12),col="cornflowerblue",type='l',lwd=2)
+     spline_args=list(df=12),col="cornflowerblue",lwd=2)
 cond_plot(UPM.out,x.target=5.5,yaxe=NULL,spline_smooth=TRUE,
      spline_args=list(df=12),add=TRUE,col='orange',lty=2,lwd=2)
 }
